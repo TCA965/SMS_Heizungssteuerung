@@ -224,6 +224,7 @@ void parseMessage()
         Serial.println("Zuheizer Impulsmodus aktiviert");
         if (debug)
           sendMessage("Zuheizer Impuls ein");
+        zuheizer_impuls = true; 
         digitalWrite(zuheizer_out, LOW);
         EEPROM.put(2, zuheizer_impuls);
       }
@@ -238,7 +239,7 @@ void parseMessage()
           delay(500);
           digitalWrite(zuheizer_out, LOW);
         }
-        else
+        else if(zuheizer_impuls == false)
         {
           digitalWrite(zuheizer_out, HIGH);
         }
@@ -270,7 +271,7 @@ void parseMessage()
           delay(500);
           digitalWrite(zuheizer_out, LOW);
         }
-        else
+        else if(zuheizer_impuls == false)
         {
           digitalWrite(zuheizer_out, LOW);
         }
@@ -304,7 +305,7 @@ void parseMessage()
           delay(500);
           digitalWrite(standheizung_out, LOW);
         }
-        else
+        else if(standheizung_impuls == false)
         {
           digitalWrite(standheizung_out, HIGH);
         }
@@ -334,7 +335,7 @@ void parseMessage()
           delay(500);
           digitalWrite(standheizung_out, LOW);
         }
-        else
+        else if(standheizung_impuls == false)
         {
           digitalWrite(standheizung_out, LOW);
         }
