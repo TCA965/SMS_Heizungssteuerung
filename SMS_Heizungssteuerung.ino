@@ -232,7 +232,7 @@ void parseMessage()
         Serial.println("Zuheizer einschalten");
         // Gewähler Modus ist Impulsmodus,
         // Schalte Zuheizer nur an, wenn er aus ist
-        if (zuheizer_impuls && zuheizer_ext = false;)
+        if (zuheizer_impuls && zuheizer_ext == false)
         {
           digitalWrite(zuheizer_out, HIGH);
           delay(500);
@@ -264,7 +264,7 @@ void parseMessage()
         Serial.println("Zuheizer ausschalten");
         // Gewähler Modus ist Impulsmodus
         // Schalte Zuheizer nur aus, wenn er an ist
-        if (zuheizer_impuls && zuheizer_ext = true;)
+        if (zuheizer_impuls && zuheizer_ext == true)
         {
           digitalWrite(zuheizer_out, HIGH);
           delay(500);
