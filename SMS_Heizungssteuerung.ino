@@ -44,13 +44,16 @@ void setup()
   EEPROM.get(2, zuheizer_impuls);
   EEPROM.get(4, standheizung_impuls);
 
-  Serial.begin(9600);
+  Serial.begin(19200);
 
-  mySerial.begin(9600);
+  mySerial.begin(19200);
+  
+  delay(5000);
 
   // Handshake und Autobauding
   mySerial.println("AT");
-  delay(50);
+  delay(2000);
+  
   mySerial.println("AT+CSQ");
   delay(50);
   // Configuring TEXT mode
@@ -227,8 +230,9 @@ void parseMessage()
       else
       {
         Serial.println("Zuheizer einschalten");
-        // Gewähler Modus ist Impulsmodus
-        if (zuheizer_impuls)
+        // Gewähler Modus ist Impulsmodus,
+        // Schalte Zuheizer nur an, wenn er aus ist
+        if (zuheizer_impuls && zuheizer_ext = false;)
         {
           digitalWrite(zuheizer_out, HIGH);
           delay(500);
@@ -259,7 +263,8 @@ void parseMessage()
       {
         Serial.println("Zuheizer ausschalten");
         // Gewähler Modus ist Impulsmodus
-        if (zuheizer_impuls)
+        // Schalte Zuheizer nur aus, wenn er an ist
+        if (zuheizer_impuls && zuheizer_ext = true;)
         {
           digitalWrite(zuheizer_out, HIGH);
           delay(500);
@@ -293,7 +298,7 @@ void parseMessage()
       {
         Serial.println("Standheizung einschalten");
         // Gewähler Modus ist Impulsmodus
-        if (standheizung_impuls)
+        if (standheizung_impuls && standheizung_ext == false)
         {
           digitalWrite(standheizung_out, HIGH);
           delay(500);
@@ -323,7 +328,7 @@ void parseMessage()
       else
       {
         Serial.println("Standheizung ausschalten");
-        if (standheizung_impuls)
+        if (standheizung_impuls && standheizung_ext == true)
         {
           digitalWrite(standheizung_out, HIGH);
           delay(500);
