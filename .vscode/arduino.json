@@ -1,5 +1,5 @@
 {
-    "sketch": "SMS_ZUHEIZER.ino",
+    "sketch": "SMS_Heizungssteuerung.ino",
     "board": "arduino:avr:pro",
     "configuration": "cpu=16MHzatmega328",
     "port": "COM4"
