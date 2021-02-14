@@ -2,8 +2,10 @@
 #include <avr/sleep.h>
 #include <EEPROM.h>
 
-//Create software serial object to communicate with SIM800L
-SoftwareSerial mySerial(5, 4); //SIM800L Tx & Rx is connected to Arduino #3 & #2
+// SoftwareSerial für SIM800L Modem
+// TX Pin 5, RX Pin 4
+SoftwareSerial mySerial(5, 4); 
+
 
 const int zuheizer_out = 6;
 const int standheizung_out = 7;
@@ -12,10 +14,13 @@ const int zuheizer_in = A2;
 const int standheizung_in = A3;
 
 
+// Char Array für erhaltene SMS-Nachrichten
 const byte numChars = 32;
-char receivedChars[numChars];   // an array to store the received data
+char receivedChars[numChars]; 
 
+// Char Array für Rufnummer des Senders
 char lastNumber[20];
+
 
 boolean newData = false;
 boolean showNext = false;
@@ -45,27 +50,30 @@ void setup()
   EEPROM.get(3, standheizung_ctrl);
   EEPROM.get(4, standheizung_impuls);
   
-  //Begin serial communication with Arduino and Arduino IDE (Serial Monitor)
+  
   Serial.begin(9600);
 
-  //Begin serial communication with Arduino and SIM800L
+  
   mySerial.begin(9600);
 
   Serial.println("Initializing...");
   delay(1000);
-  mySerial.println("AT"); //Once the handshake test is successful, it will back to OK
+  // Handshake und Autobauding
+  mySerial.println("AT"); 
   delay(50);
   mySerial.println("AT+CSQ");
   delay(50);
-  mySerial.println("AT+CMGF=1"); // Configuring TEXT mode
+  // Configuring TEXT mode
+  mySerial.println("AT+CMGF=1"); 
   delay(50);
-  mySerial.println("AT+CNMI=1,2,0,0,0"); // Decides how newly arrived SMS messages should be handled
+  // Decides how newly arrived SMS messages should be handled
+  mySerial.println("AT+CNMI=1,2,0,0,0"); 
   delay(50);
 
-  mySerial.println("AT+CSCLK=2"); // Configuring Sleep
+  // Configuring Sleep
+  mySerial.println("AT+CSCLK=2"); 
   delay(50);
 
-  //sendMessage("Hello");
 }
 
 unsigned long idleTime;
@@ -78,7 +86,7 @@ void loop()
 {
   readResponse();
 
-
+  // Sleep Modus des AVR
   /* if (millis() - idleTime >= 5000) {
      Serial.println("Sleep");
      attachInterrupt(digitalPinToInterrupt(2), ring, LOW);
@@ -117,7 +125,8 @@ void recvWithEndMarker() {
       }
     }
     else {
-      receivedChars[ndx] = '\0'; // terminate the string
+      // terminate the string
+      receivedChars[ndx] = '\0'; 
       ndx = 0;
       newData = true;
     }
